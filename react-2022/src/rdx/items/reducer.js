@@ -1,4 +1,4 @@
-import { SET_COUNTRIES, SET_PRODUCTS, SET_CURRENCIES, INCREASE_PRODUCT_VALUE, DECREASE_PRODUCT_VALUE} from './actions';
+import { SET_COUNTRIES, SET_PRODUCTS, SET_CURRENCIES, INCREASE_PRODUCT_VALUE, DECREASE_PRODUCT_VALUE, USER_DATA} from './actions';
 
 const initialState = {
   countries: [],
@@ -29,6 +29,7 @@ const initialState = {
         imgSrc: 'https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/25afe220-e5dd-4f21-8e23-22b1522a03f5/jordan-air-nfh-shoes-Ktzw9P.png'}
 ],
 currency: [],
+user: {}
 }
 
 export const reducer = (state = initialState, action) => {
@@ -77,6 +78,11 @@ export const reducer = (state = initialState, action) => {
         } else return product
         })
       }
+    case USER_DATA:
+        return {
+        ...state,
+        user: action.payload
+    }
 
     default:
       return state;

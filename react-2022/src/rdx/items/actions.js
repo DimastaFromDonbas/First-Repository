@@ -3,7 +3,7 @@ export const SET_PRODUCTS = '@items/SET_PRODUCTS';
 export const SET_CURRENCIES = '@items/SET_CURRENCIES';
 export const INCREASE_PRODUCT_VALUE = '@items/INCREASE_PRODUCT_VALUE';
 export const DECREASE_PRODUCT_VALUE = '@items/DECREASE_PRODUCT_VALUE';
-
+export const USER_DATA = '@items/USER_DATA';
 
 export const setCountries = (item) => {
   return {
@@ -36,6 +36,13 @@ export const increaseProductValue = (item) => {
 export const decreaseProductValue = (item) => {
   return {
     type: DECREASE_PRODUCT_VALUE,
+    payload: item,
+  }
+}
+
+export const UserData = (item) => {
+  return {
+    type: USER_DATA,
     payload: item,
   }
 }

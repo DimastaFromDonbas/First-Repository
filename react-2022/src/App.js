@@ -6,8 +6,10 @@ import Calc from "./components/Calc";
 import Anna from './components/Anna'
 import { Provider } from "react-redux";
 import { store } from "./rdx"
+import Login from "./components/Login";
  
 function App() {
+
   return (
     <Provider store={store}>
     <div className={'bg-dark'}>
@@ -18,7 +20,7 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link className="nav-link" to="/">Countries</Link>
+            <Link className="nav-link" to="/countries">Countries</Link>
             <Link className="nav-link ml-3" to="/shop">Shop</Link>
             <Link className="nav-link ml-3" to="/calc">Calc</Link>
             <Link className="nav-link ml-3" to="/anna">Anna</Link>
@@ -27,7 +29,8 @@ function App() {
       </Container>
     </Navbar>
           <Routes>
-            <Route path="/" element = {<Countries />}/>
+            <Route path="/" element = {<Login />}/>
+            <Route path="countries" element = {<Countries />}/>
             <Route path="shop" element = {<Shop />}/>
             <Route path="calc" element = {<Calc />}/>
             <Route path="anna" element = {<Anna />}/>

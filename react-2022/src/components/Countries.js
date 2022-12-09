@@ -6,9 +6,20 @@ import SearchCountry from "./SearchCountry";
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setCountries } from "../rdx/items/actions";
-import { selectAllCountries } from "../rdx/items/selectors";
+import { selectAllCountries, selectUser } from "../rdx/items/selectors";
+import { useNavigate } from "react-router-dom";
 
 function Countries() {
+
+    const user = useSelector(selectUser)
+    const navigate = useNavigate()
+  
+    useEffect(() => {
+      if(!user?.login) {
+        navigate("/")
+      }
+    },[user.login,navigate])
+
     const countries = useSelector(selectAllCountries)
     const dispatch = useDispatch()
 

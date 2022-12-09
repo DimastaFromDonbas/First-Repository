@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Container,Row} from 'react-bootstrap'
 import Product from "./Product";
 import Cart from "./Cart";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAllProducts } from "../rdx/items/selectors";
+import { selectAllProducts, selectUser } from "../rdx/items/selectors";
 import { setProducts } from "../rdx/items/actions";
 import FilterProduct from "./FilterProduct";
+import { useNavigate } from "react-router-dom";
 
 function Shop() {
+
+    const user = useSelector(selectUser)
+    const navigate = useNavigate()
+  
+    useEffect(() => {
+      if(!user?.login) {
+        navigate("/")
+      }
+    },[user.login,navigate])
+
     const products = useSelector(selectAllProducts)
     const dispatch = useDispatch()
 

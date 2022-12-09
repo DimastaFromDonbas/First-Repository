@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card,Button,Modal } from 'react-bootstrap'
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { selectUser } from "../rdx/items/selectors";
 import AnnaUz from './AnnaUz.png'
 
 function Anna() {
+
+  const user = useSelector(selectUser)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!user?.login) {
+      navigate("/")
+    }
+  },[user.login,navigate])
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);

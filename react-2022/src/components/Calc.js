@@ -5,11 +5,22 @@ import InputDate from "./InputDate";
 import InputCalc from "./InputCalc";
 import Currency from "./Currency";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAllCurrencies } from "../rdx/items/selectors";
+import { selectAllCurrencies, selectUser } from "../rdx/items/selectors";
 import { setAllCurrencies } from "../rdx/items/actions";
+import { useNavigate } from "react-router-dom";
 
 
 function Calc(){
+
+    const user = useSelector(selectUser)
+    const navigate = useNavigate()
+  
+    useEffect(() => {
+      if(!user?.login) {
+        navigate("/")
+      }
+    },[user.login,navigate])
+
     const currencies = useSelector(selectAllCurrencies)
     const dispatch = useDispatch()
 
