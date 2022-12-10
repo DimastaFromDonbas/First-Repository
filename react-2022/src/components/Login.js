@@ -7,10 +7,16 @@ import { UserData } from '../rdx/items/actions';
 import { useNavigate } from "react-router-dom";
 
 
+
 function Login(){
 
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const [emailDirty, setEmailDirty] = useState(false);
+    const [passwordDirty, setPasswordDirty] = useState(false);
+    const [emailError, setEmailError] = useState("Логин не может быть пустым");
+    const [passwordError, setPasswordError] = useState("Пароль не может быть пустым");
+    const [ formValid, setFormValid] = useState(false);
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
@@ -39,6 +45,48 @@ function Login(){
       }
     },[user.login,navigate,dispatch])
 
+    const blurHandler = (e) => {
+      switch(e.currentTarget.name) {
+        case 'login':
+          setEmailDirty(true)
+        break;
+        case 'password':
+          setPasswordDirty(true)
+        break;
+        default:
+      }
+    }
+
+    function loginUser(e) {
+      setLogin(e.currentTarget.value)
+      const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+      if(!re.test(e.target.value)) {
+        setEmailError('Некоректный логин')
+      } else {
+        setEmailError('')
+      }
+    }
+
+    function passwordUser(e) {
+      setPassword(e.currentTarget.value)
+      if(e.target.value.length < 6) {
+        setPasswordError('Некоректный пароль')
+        if(!e.target.value){
+          setPasswordError('Пароль не может быть пустым')
+        }
+      } else {
+        setPasswordError('')
+      }
+    }
+
+    useEffect(() => {
+      if(emailError || passwordError) {
+        setFormValid(false)
+      } else {
+        setFormValid(true)
+      }
+    },[emailError, passwordError])
+
     return ( <div style={{display: 'flex', justifyContent: 'center',height: '660px', alignItems: 'center'}}>
        
         <Card style={{ width: '18rem' }}>
@@ -48,9 +96,11 @@ function Login(){
             <Card.Text style={{textAlign: 'center'}}>
               Enter your username to sign in
             </Card.Text>
-            <Form.Control value={login} onChange={(e) => setLogin(e.currentTarget.value)} placeholder='Login' className="mb-3" type="email"/>
-            <Form.Control value={password} onChange={(e) => setPassword(e.currentTarget.value)} placeholder='Password' className="mb-3" type="password"/>
-            <Button onClick={userLoginPassword} variant="primary" >Next</Button>
+            {(emailDirty && emailError) && <div style={{color: 'red'}}>{emailError}</div> }
+            <Form.Control onBlur={e => blurHandler(e)} name='login' value={login} onChange={loginUser} placeholder='Login' className="mb-3" type="email"/>
+            {(passwordDirty && passwordError) && <div style={{color: 'red'}}>{passwordError}</div>}
+            <Form.Control onBlur={e => blurHandler(e)} name='password' value={password} onChange={passwordUser} placeholder='Password' className="mb-3" type="password"/>
+            <Button disabled={!formValid} onClick={userLoginPassword} variant="primary" >Next</Button>
           </Card.Body>
         </Card>
         </div>
