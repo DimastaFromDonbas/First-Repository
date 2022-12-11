@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../rdx/items/selectors';
 import { UserData } from '../rdx/items/actions';
 import { useNavigate } from "react-router-dom";
+import validator from 'validator';
 
 
 
@@ -59,8 +60,7 @@ function Login(){
 
     function loginUser(e) {
       setLogin(e.currentTarget.value)
-      const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-      if(!re.test(e.target.value)) {
+      if(!validator.isEmail(e.currentTarget.value)) {
         setEmailError('Некоректный логин')
       } else {
         setEmailError('')
