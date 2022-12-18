@@ -7,6 +7,7 @@ import Anna from './components/Anna'
 import { Provider } from "react-redux";
 import { store } from "./rdx"
 import Login from "./components/Login";
+import Input from "./components/Input";
  
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
             <Link className="nav-link ml-3" to="/shop">Shop</Link>
             <Link className="nav-link ml-3" to="/calc">Calc</Link>
             <Link className="nav-link ml-3" to="/anna">Anna</Link>
+            <Link className="nav-link ml-3" to="/input">Input</Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -34,6 +36,7 @@ function App() {
             <Route path="shop" element = {<Shop />}/>
             <Route path="calc" element = {<Calc />}/>
             <Route path="anna" element = {<Anna />}/>
+            <Route path="input" element = {<Input />}/>
           </Routes>
         </div>
     </div>
