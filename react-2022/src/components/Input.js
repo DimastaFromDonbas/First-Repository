@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from'react';
 import { Card, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { inputName } from '../rdx/items/actions';
-import { inputAllName } from '../rdx/items/selectors';
+import { inputAllName, selectUser } from '../rdx/items/selectors';
 
 function Input(){
 
@@ -12,6 +13,15 @@ function Input(){
     const [name, setName] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [fetching, setFetching] = useState(true)
+
+    const user = useSelector(selectUser)
+    const navigate = useNavigate()
+  
+    useEffect(() => {
+      if(!user?.login) {
+        navigate("/")
+      }
+    },[user.login,navigate])
 
     function getName(e) {
         setName(e.currentTarget.value);
