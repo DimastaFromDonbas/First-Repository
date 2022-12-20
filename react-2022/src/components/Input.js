@@ -24,19 +24,27 @@ function Input(){
     },[user.login,navigate])
 
     function getName(e) {
-        setName(e.currentTarget.value);
-    }
-
-    useEffect(() => {
         if(fetching) {
-            console.log("Loading")
-            axios(`https://jsonplaceholder.typicode.com/photos?_limit=10&_page=${currentPage}`).then(res => {
+            source.cancel('huy')
+        }
+        setName(e.currentTarget.value);
+        setFetching(true)
+    }
+   
+    let source = axios.CancelToken.source();
+    useEffect(() => {
+        if(fetching && name) { 
+            axios.get(`https://jsonplaceholder.typicode.com/photos?_limit=10&_page=${currentPage}`,{ cancelToken: source.token} ).then(res => {
                 dispatch(inputName([...artAll, ...res.data]));
                 setCurrentPage(prev => prev + 1)
             })
+            .catch((err) => {
+               console.log(err)
+            })
             .finally(() => setFetching(false))
         }
-    },[fetching,dispatch, currentPage])
+    // eslint-disable-next-line
+    },[fetching,currentPage,name ])
 
     useEffect(() => {
         document.addEventListener('scroll', scrollHandler)
@@ -51,10 +59,12 @@ function Input(){
         }
     }
 
+    let picFilter = artAll.filter(art => name ? art.title.includes(name) : false)
+
     return <>
         <Form.Control value={name} onChange={getName} className="mb-3" placeholder="Search" type="text" />
 
-        { artAll.filter(art => name ? art.title.includes(name) : false).map(el =><div> <Card.Img key={el.title} style = {{width: '150px' , heigth: '150px'}} variant="top" src={el.thumbnailUrl} /></div>)}
+        { picFilter.map((el, index) =><div key={index}> <Card.Img key={el.title} style = {{width: '150px' , heigth: '150px'}} variant="top" src={el.thumbnailUrl} /></div>)}
         
     </>
 }

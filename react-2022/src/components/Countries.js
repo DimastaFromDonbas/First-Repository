@@ -34,7 +34,8 @@ function Countries() {
 
 
     useEffect(() => {
-        axios('https://restcountries.com/v2/all').then(res => {
+        axios('https://restcountries.com/v2/all')
+            .then(res => {
             dispatch(setCountries(res.data));
         });
     }, [dispatch])

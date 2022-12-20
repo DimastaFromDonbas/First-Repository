@@ -1,5 +1,5 @@
 import Countries from "./components/Countries";
-import {Alert, Navbar,Container,Nav} from "react-bootstrap";
+import {  Navbar,Container,Nav} from "react-bootstrap";
 import {Routes,Route,Link} from "react-router-dom"
 import Shop from "./components/Shop";
 import Calc from "./components/Calc";
@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import { store } from "./rdx"
 import Login from "./components/Login";
 import Input from "./components/Input";
+import ShopProduct from "./components/ShopProduct";
  
 function App() {
 
@@ -15,7 +16,6 @@ function App() {
     <Provider store={store}>
     <div className={'bg-dark'}>
         <div className="container bg-light p-3">
-            <Alert style={{textAlign:'center'}} variant={'success'}>Hello Dima</Alert>
             <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -34,6 +34,7 @@ function App() {
             <Route path="/" element = {<Login />}/>
             <Route path="countries" element = {<Countries />}/>
             <Route path="shop" element = {<Shop />}/>
+            <Route path="shop/:id" element = {<ShopProduct />}/>
             <Route path="calc" element = {<Calc />}/>
             <Route path="anna" element = {<Anna />}/>
             <Route path="input" element = {<Input />}/>
